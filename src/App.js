@@ -1,28 +1,66 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { Button } from "reactstrap";
+import "./App.css";
+import { Navbar, colors, button, grid, FormGroup, badge } from "reactstrap";
+let date = new Date();
+let strang = "        ";
 
-class App extends Component {
+export default class ToDoList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userInput: "",
+      list: []
+    };
+  }
+
+  changeUserInput(input) {
+    this.setState({
+      userInput: input
+    });
+  }
+
+  addToList(input) {
+    let listArray = this.state.list;
+    listArray.push(input);
+
+    this.setState({
+      list: listArray
+    });
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div className="to-do-list-main">
+        <nav class="navbar navbar-dark bg-dark">
+          <h5 class="text-light">To-Do List</h5>
+        </nav>
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            placeholder=""
+            aria-label=""
+            aria-describedby="basic-addon1"
+            onChange={e => this.changeUserInput(e.target.value)}
+            value={this.state.userinput}
+          />
+          <div class="input-group-append">
+            <button
+              class="btn btn-success"
+              type="button"
+              onClick={() => this.addToList(this.state.userInput)}
+            >
+              submit
+            </button>
+          </div>
+        </div>
+        <ul>
+          {this.state.list.map(val => (
+            <li text-secondary>{val + "\xa0\xa0\xa0\xa0\xa0" + date}</li>
+          ))}
+        </ul>
       </div>
     );
   }
 }
-
-export default App;
